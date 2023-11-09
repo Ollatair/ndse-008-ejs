@@ -1,17 +1,14 @@
 const express = require('express');
 
 const router = express.Router();
-const fileMulter = require('../middleware/file');
-const store = require('../middleware/store');
-const Book = require('../models/book');
+const fileMulter = require('../../middleware/file');
+const store = require('../../middleware/store');
+const Book = require('../../models/book');
 
 // получить все книги | получаем массив всех книг
 router.get('/', (req, res) => {
   const { books } = store;
-  res.render('books/index', {
-    title: 'Книги',
-    books,
-  });
+  res.json(books);
 });
 
 // получить книгу по **ID** | получаем объект книги, если запись не найдена, вернём **Code: 404**
