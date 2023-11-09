@@ -20,10 +20,12 @@ router.get('/:id', (req, res) => {
   const { id } = req.params;
   const idx = books.findIndex((el) => el.id === id);
   if (idx !== -1) {
-    res.json(books[idx]);
+    res.render("books/view", {
+        title: "Книги | Описание",
+        book: books[idx],
+    });
   } else {
-    res.status(404);
-    res.json('404 | книга не найдена');
+    res.redirect('/404');
   }
 });
 
