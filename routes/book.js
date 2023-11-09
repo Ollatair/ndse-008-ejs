@@ -5,7 +5,7 @@ const fileMulter = require('../middleware/file');
 const store = require('../middleware/store');
 const Book = require('../models/book');
 
-// получить все книги | получаем массив всех книг
+// index — просмотр списка всех книг (вывод заголовков);
 router.get('/', (req, res) => {
   const { books } = store;
   res.render('books/index', {
@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
   });
 });
 
+// создать книгу
 router.get('/create', (req, res) => {
   res.render('books/create', {
     title: 'Книга | добавить',
@@ -21,7 +22,7 @@ router.get('/create', (req, res) => {
   });
 });
 
-// создать книгу | создаём книгу и возвращаем её же вместе с присвоенным **ID**
+// создать книгу
 router.post('/create', fileMulter.single('fileBook'), (req, res) => {
   const { books } = store;
   const data = req.body;
@@ -36,7 +37,7 @@ router.post('/create', fileMulter.single('fileBook'), (req, res) => {
   res.redirect('/books');
 });
 
-// получить книгу по **ID** | получаем объект книги, если запись не найдена, вернём **Code: 404**
+// view — информация по конкретной книге;
 router.get('/:id', (req, res) => {
   const { books } = store;
   const { id } = req.params;
@@ -51,28 +52,7 @@ router.get('/:id', (req, res) => {
   }
 });
 
-// Метод отдаёт на скачиваение файл книги по её **:id**.
-router.get('/:id/download', (req, res) => {
-  const { books } = store;
-  const { id } = req.params;
-  const idx = books.findIndex((el) => el.id === id);
-  if (idx !== -1) {
-    const bookId = books[idx];
-    const filePath = bookId.fileBook;
-
-    // Отправка файла на скачивание
-    res.download(filePath, (err) => {
-      if (err) {
-        res.status(404);
-        res.json('404 | Файл не найден');
-      }
-    });
-  } else {
-    res.status(404);
-    res.json('404 | книга не найдена');
-  }
-});
-
+// update — редактирование книги.
 router.get('/update/:id', (req, res) => {
   const { books } = store;
   const { id } = req.params;
@@ -88,7 +68,7 @@ router.get('/update/:id', (req, res) => {
   }
 });
 
-// редактировать книгу по **ID** | редактируем объект книги, если не найдена, вернём **Code: 404**
+// update — редактирование книги.
 router.post('/update/:id', fileMulter.single('fileBook'), (req, res) => {
   const { books } = store;
   const {
@@ -119,7 +99,7 @@ router.post('/update/:id', fileMulter.single('fileBook'), (req, res) => {
   }
 });
 
-// удалить книгу по **ID** | удаляем книгу и возвращаем ответ: **'ok'**
+// удалить книгу по **ID**
 router.post('/delete/:id', (req, res) => {
   const { books } = store;
   const { id } = req.params;

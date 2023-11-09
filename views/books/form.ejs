@@ -29,8 +29,8 @@
 
     <div class="form-group">
         <label for="inputFavorite">Избранная</label>
-        <input type="text"
-               value="<%= book.favorite %>"
+        <input type="checkbox" 
+               <% if (book.favorite === true) { %> checked <% } %> 
                name="favorite"
                class="form-control"
                id="inputFavorite">
