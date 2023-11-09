@@ -10,7 +10,7 @@ class Book {
     this.title = title ?? '';
     this.description = description ?? '';
     this.authors = authors ?? '';
-    this.favorite = favorite == 'on' ? true : Boolean(favorite);
+    this.favorite = favorite === 'on' ? true : Boolean(favorite);
     this.fileCover = fileCover ?? '';
     this.fileName = fileName ?? '';
     this.fileBook = fileBook ?? '';
