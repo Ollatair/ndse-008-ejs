@@ -5,7 +5,6 @@ const store = {
   books: [],
 };
 
-
 defaultList.forEach((book) => {
   store.books.push(new Book(book));
 });
